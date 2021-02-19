@@ -1,9 +1,9 @@
 <template>
   <div class="das-box">
     <header>
-      <h3>密钥算法统计</h3>
+      <h3>密钥状态统计</h3>
       <section class="fl-right">
-        <a-select v-model:value="searchForm.createUser" placeholder="创建人" ref="select" showSearch allowClear @change="handleChange" style="width: 120px">
+        <a-select v-model:value="searchForm.auditUser" placeholder="审核人" ref="select" showSearch allowClear @change="handleChange" style="width: 120px">
           <a-select-option v-for="user in userOptions" :key="user.id" :value="user.id">{{user.userName}}</a-select-option>
         </a-select>
       </section>
@@ -40,14 +40,22 @@ const option = {
 
 export default {
   name: "StatusKeys",
+  props: ["collapsed"],
   data() {
     return {
       chart: null,
       searchForm: {
-        createUser: undefined,
+        auditUser: undefined,
       },
       userOptions: [],
     };
+  },
+  watch: {
+    collapsed() {
+      setTimeout(() => {
+        this.resizeChart();
+      }, 300);
+    },
   },
   methods: {
     renderChart() {
@@ -68,12 +76,12 @@ export default {
       }
     },
     handleChange(id) {
-      this.searchForm.createUser = id;
+      this.searchForm.auditUser = id;
       this.renderChart();
     },
   },
   created() {
-    this.$http({ url: "/dict/users", ignoreReq: true }).then((res) => {
+    this.$http({ url: "/dict/keyAuditUsers", ignoreReq: true }).then((res) => {
       this.userOptions = res.data;
     });
   },

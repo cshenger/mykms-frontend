@@ -29,6 +29,10 @@ const option = {
   xAxis: {
     type: "category",
     boundaryGap: false,
+    axisLabel: {
+      interval: 0, //代表显示所有x轴标签显示
+      rotate: 45, //代表逆时针旋转45度
+    },
     data: [],
   },
   yAxis: {
@@ -47,6 +51,7 @@ let myChart = null;
 
 export default {
   name: "KeysMonth",
+  props: ["collapsed"],
   data() {
     return {
       // chart: null,
@@ -56,6 +61,13 @@ export default {
       },
       userOptions: [],
     };
+  },
+  watch: {
+    collapsed() {
+      setTimeout(() => {
+        this.resizeChart();
+      }, 300);
+    },
   },
   methods: {
     renderChart() {

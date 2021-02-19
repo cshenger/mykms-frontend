@@ -54,9 +54,11 @@
 
 .box {
   min-height: 400px;
-  margin: 15px;
+  margin: 20px 15px;
   padding: 15px;
   background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 3px 5px #ccc;
   .box-header {
     margin-bottom: 10px;
     &:after {

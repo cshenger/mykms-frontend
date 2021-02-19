@@ -6,7 +6,6 @@
 
         <a-layout>
           <Header :collapsed="collapsed" @toggle-collapsed="collapsed = !collapsed" />
-          <Breadcrumb />
           <a-layout-content>
             <router-view></router-view>
           </a-layout-content>
@@ -20,7 +19,6 @@
 import { ref, computed } from "vue";
 import Sider from "@/components/Sider";
 import Header from "@/components/Header";
-import Breadcrumb from "@/components/Breadcrumb";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import moment from "moment";
 import "moment/locale/zh-cn";
@@ -32,7 +30,6 @@ export default {
   components: {
     Sider,
     Header,
-    Breadcrumb,
   },
   setup() {
     let collapsed = ref(false);
@@ -60,12 +57,6 @@ export default {
     &:hover {
       color: #1890ff;
     }
-  }
-
-  .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px;
   }
 }
 

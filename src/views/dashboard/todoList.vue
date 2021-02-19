@@ -5,7 +5,7 @@
     </header>
     <a-list size="small" bordered :data-source="todos" class="todolist">
       <template #renderItem="{ item }">
-        <a-list-item><a href="javascript:;" @click="jumpTo(item)">{{ item.text }}</a></a-list-item>
+        <a-list-item><a href="javascript:;" :title="item.text" @click="jumpTo(item)">{{ item.text }}</a></a-list-item>
       </template>
     </a-list>
   </div>
@@ -46,6 +46,16 @@ export default {
     color: #333;
     &:hover {
       color: #999;
+    }
+  }
+  .ant-list-items {
+    .ant-list-item {
+      a {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
   }
 }

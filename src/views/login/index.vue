@@ -1,22 +1,23 @@
 <template>
   <div class="login">
     <section class="main">
+      <h1>密钥管理系统</h1>
       <a-form ref="ruleForm" :model="form" :rules="rules">
         <a-form-item ref="loginName" name="loginName">
-          <a-input v-model:value="form.loginName" placeholder="登录名">
+          <a-input size="large" v-model:value="form.loginName" placeholder="登录名">
             <template #prefix>
               <UserOutlined style="color:rgba(0,0,0,.25)" />
             </template>
           </a-input>
         </a-form-item>
         <a-form-item ref="password" name="password">
-          <a-input v-model:value="form.password" type="password" placeholder="密码">
+          <a-input size="large" v-model:value="form.password" type="password" placeholder="密码">
             <template #prefix>
               <LockOutlined style="color:rgba(0,0,0,.25)" />
             </template>
           </a-input>
         </a-form-item>
-        <a-button type="primary" block @click="onSubmit">
+        <a-button size="large" type="primary" block @click="onSubmit">
           登 录
         </a-button>
       </a-form>
@@ -108,16 +109,23 @@ export default {
   width: 100vw;
   height: 100vh;
   position: relative;
+  overflow: hidden;
   .main {
     position: absolute;
     z-index: 2;
-    top: 0;
+    top: -300px;
     right: 0;
     bottom: 0;
     left: 0;
     margin: auto;
     width: 300px;
     height: 200px;
+
+    h1 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
     .ant-col {
       width: 100%;
     }

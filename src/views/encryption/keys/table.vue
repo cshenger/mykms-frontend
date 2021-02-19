@@ -24,7 +24,7 @@
         </a-form>
       </div>
       <div class="fl-right">
-        <a-button type="primary" @click="addData"><template #icon>
+        <a-button v-if="userRole.includes('keyAdmin')" type="primary" @click="addData"><template #icon>
             <PlusOutlined />
           </template>新增</a-button>
       </div>
@@ -185,6 +185,7 @@ export default {
     const route = useRoute();
     const store = useStore();
     const { ctx } = getCurrentInstance();
+    const userRole = store.state.userRole;
     const algorOptions = ref([]);
     const statusOptions = ref([]);
     // 搜索框列表
@@ -351,6 +352,7 @@ export default {
     return {
       store,
       columns,
+      userRole,
       algorOptions,
       statusOptions,
       loadingTable,

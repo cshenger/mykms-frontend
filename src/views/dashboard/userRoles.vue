@@ -46,10 +46,18 @@ const option = {
 
 export default {
   name: "UserRoles",
+  props: ["collapsed"],
   data() {
     return {
       chart: null,
     };
+  },
+  watch: {
+    collapsed() {
+      setTimeout(() => {
+        this.resizeChart();
+      }, 300);
+    },
   },
   methods: {
     renderChart() {

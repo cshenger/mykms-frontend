@@ -7,16 +7,16 @@
         <todo-list />
       </a-col>
       <a-col v-if="userRole.includes('sysAdmin')" :span="girdspan" class="mb-20">
-        <user-roles @addBoxNum="addBoxNum" />
+        <user-roles :collapsed="collapsed" @addBoxNum="addBoxNum" />
       </a-col>
       <a-col v-if="userRole.includes('keyAdmin')" :span="girdspan" class="mb-20">
-        <algor-keys @addBoxNum="addBoxNum" />
+        <algor-keys :collapsed="collapsed" @addBoxNum="addBoxNum" />
       </a-col>
       <a-col v-if="userRole.includes('keyAudit')" :span="girdspan" class="mb-20">
-        <status-keys @addBoxNum="addBoxNum" />
+        <status-keys :collapsed="collapsed" @addBoxNum="addBoxNum" />
       </a-col>
-      <a-col :span="24">
-        <keys-month />
+      <a-col :span="boxNum==0 ? 18 : 24">
+        <keys-month :collapsed="collapsed" />
       </a-col>
     </a-row>
   </div>
@@ -41,18 +41,29 @@ export default {
   data() {
     return {
       boxNum: 0,
-      girdspan: 24,
+      girdspan: 6,
     };
   },
   computed: {
     userRole() {
       return this.$store.state.userRole;
     },
+    collapsed() {
+      return this.$store.state.collapsed;
+    },
   },
   watch: {
     boxNum() {
+      this.renderBoxNum();
+    },
+  },
+  methods: {
+    addBoxNum(value) {
+      this.boxNum += value;
+    },
+    renderBoxNum() {
       if (this.boxNum == 0) {
-        this.girdspan = 24;
+        this.girdspan = 6;
       } else if (this.boxNum == 1) {
         this.girdspan = 12;
       } else if (this.boxNum == 2) {
@@ -62,13 +73,8 @@ export default {
       }
     },
   },
-  methods: {
-    addBoxNum(value) {
-      this.boxNum += value;
-    },
-  },
   created() {
-    console.log(this.userRole);
+    this.renderBoxNum();
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <a-layout-sider breakpoint="lg" :collapsed-width="collapsedWidth" :trigger="null" :collapsed="collapsed" @breakpoint="onBreakpoint" class="sider"> -->
-    <div class="logo" />
+    <!-- <div class="logo" /> -->
     <a-menu theme="dark" mode="inline" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys">
       <template v-for="item in navs">
         <a-menu-item v-if="!item.children && !item.hidden && (!item.roles || (item.roles && hasRoles(userRole, item.roles)))" :key="item.path">

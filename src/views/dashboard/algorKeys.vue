@@ -40,6 +40,7 @@ const option = {
 
 export default {
   name: "AlgorKeys",
+  props: ["collapsed"],
   data() {
     return {
       chart: null,
@@ -48,6 +49,13 @@ export default {
       },
       userOptions: [],
     };
+  },
+  watch: {
+    collapsed() {
+      setTimeout(() => {
+        this.resizeChart();
+      }, 300);
+    },
   },
   methods: {
     renderChart() {
@@ -73,7 +81,7 @@ export default {
     },
   },
   created() {
-    this.$http({ url: "/dict/users", ignoreReq: true }).then((res) => {
+    this.$http({ url: "/dict/keyAdminUsers", ignoreReq: true }).then((res) => {
       this.userOptions = res.data;
     });
   },

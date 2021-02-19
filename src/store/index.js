@@ -13,6 +13,8 @@ export default createStore({
     loginName: "",
     userName: "",
     modelCodes: [],
+    // 全局 collapsed
+    collapsed: null,
   },
   mutations: {
     // 全局loading
@@ -47,6 +49,9 @@ export default createStore({
       sessionStorage.removeItem('userName')
       // sessionStorage.removeItem('modelCodes');
     },
+    changeCollapsed(state, value) {
+      state.collapsed = value;
+    }
   },
   actions: {},
   modules: {}
