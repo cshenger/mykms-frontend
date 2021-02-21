@@ -5,10 +5,10 @@
         <a-textarea v-model:value="form.inputer" placeholder="请输入内容" showCount :maxlength="200" />
       </a-form-item>
       <a-form-item ref="way" label="操作方式" name="way">
-        <a-select v-model:value="form.way" allowClear placeholder="请选择操作方式">
-          <a-select-option value="1">加密</a-select-option>
-          <a-select-option value="0">解密</a-select-option>
-        </a-select>
+        <a-radio-group v-model:value="form.way">
+          <a-radio value="1">加密</a-radio>
+          <a-radio value="0">解密</a-radio>
+        </a-radio-group>
       </a-form-item>
       <a-form-item ref="theKey" label="操作密钥" name="theKey">
         <a-select v-model:value="form.theKey" allowClear placeholder="请选择操作算法">
@@ -42,7 +42,7 @@ export default {
 
     let form = reactive({
       inputer: "",
-      way: undefined,
+      way: "1",
       theKey: undefined,
     });
 

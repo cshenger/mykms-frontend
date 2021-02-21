@@ -1,7 +1,7 @@
 <template>
   <div class="das-box">
     <header>
-      <h3>待办事项</h3>
+      <h3>待办/通知</h3>
     </header>
     <a-list size="small" bordered :data-source="todos" class="todolist">
       <template #renderItem="{ item }">

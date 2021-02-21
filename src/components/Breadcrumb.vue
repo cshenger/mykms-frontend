@@ -19,15 +19,12 @@ export default {
   watch: {
     $route: {
       handler() {
-        this.$store.state.matched = JSON.parse(
-          JSON.stringify(this.$route.matched)
-        );
         if (this.$route.path == "/dashboard/index") {
           this.showBread = false;
         } else {
           this.showBread = true;
         }
-        this.$store.state.matched = this.$store.state.matched.filter((item) => {
+        this.$store.state.matched = this.$route.matched.filter((item) => {
           return !!item.meta.title;
         });
       },
