@@ -74,7 +74,13 @@
 </template>
 
 <script>
-import { reactive, ref, getCurrentInstance, createVNode } from "vue";
+import {
+  reactive,
+  ref,
+  getCurrentInstance,
+  createVNode,
+  watchEffect,
+} from "vue";
 import { Modal } from "ant-design-vue";
 import Add from "./add";
 import Send from "./send";
@@ -206,15 +212,11 @@ export default {
     });
     let tableData = ref([]);
 
-    if (route.query && route.query.id) {
-      searchForm.id = route.query.id;
-    }
-
-    if (props.tabsType == "history") {
-      searchForm.status = 4;
-    }
-
     const renderTable = (current = 1) => {
+      if (props.tabsType == "history") {
+        searchForm.status = 4;
+      }
+
       getTableData(ctx.$http, {
         url: "/keys/list",
         searchForm,
@@ -226,12 +228,16 @@ export default {
       });
     };
 
+    renderTable();
+    watchEffect(() => {
+      searchForm.id = route.query.id || "";
+      renderTable();
+    });
+
     const changeTable = (pag) => {
       pages.current = pag.current;
       renderTable(pages.current);
     };
-
-    renderTable();
 
     /* 表格的操作 */
     let dialogs = reactive({

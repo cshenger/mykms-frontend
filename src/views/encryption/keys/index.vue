@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import TableKeys from "./table";
 import { useRoute } from "vue-router";
 
@@ -27,9 +27,9 @@ export default {
       console.log(value);
     };
 
-    if (route.query && route.query.activeKey) {
-      activeKey.value = route.query.activeKey;
-    }
+    watchEffect(() => {
+      activeKey.value = route.query.activeKey || "using";
+    });
 
     return {
       activeKey,

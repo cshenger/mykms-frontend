@@ -15,6 +15,9 @@
         </a>
         <template v-slot:overlay>
           <a-menu @click="handleMenuClick">
+            <a-menu-item key="2">
+              <span @click="editPassword">修改密码</span>
+            </a-menu-item>
             <a-menu-item key="1">
               <span @click="logOut">退出</span>
             </a-menu-item>
@@ -23,6 +26,11 @@
       </a-dropdown>
     </section>
   </a-layout-header>
+
+  <!-- 弹框部分-->
+  <a-modal v-model:visible="dialogs.visible" :title="dialogs.title" :maskClosable="false" :footer="null">
+    <EditPassword v-if="dialogs.visible" :userId="dialogs.userId" @cancel-dialog="cancelDialog" />
+  </a-modal>
 </template>
 
 <script>
@@ -36,6 +44,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons-vue";
 import Breadcrumb from "@/components/Breadcrumb";
+import EditPassword from "../views/users/editPassword";
 
 export default {
   name: "Header",
@@ -45,9 +54,15 @@ export default {
     DownOutlined,
     UserOutlined,
     Breadcrumb,
+    EditPassword,
   },
   props: {
     collapsed: Boolean,
+  },
+  emits: {
+    toggleCollapsed: (payload) => {
+      return payload;
+    },
   },
   setup(props, { emit }) {
     const state = reactive(useStore().state);
@@ -70,12 +85,35 @@ export default {
       router.push({ path: "/login" });
     };
 
+    // 弹框
+    let dialogs = reactive({
+      title: "",
+      visible: false,
+      userId: "",
+    });
+
+    const cancelDialog = (reload) => {
+      dialogs.subType = "";
+      dialogs.title = "";
+      dialogs.visible = false;
+      dialogs.userId = "";
+    };
+
+    const editPassword = () => {
+      dialogs.visible = true;
+      dialogs.title = "修改密码";
+      dialogs.userId = store.state.userId;
+    };
+
     return {
       ...toRefs(state),
       toggleCollapsed,
       visible,
       handleMenuClick,
       logOut,
+      dialogs,
+      cancelDialog,
+      editPassword,
     };
   },
 };
