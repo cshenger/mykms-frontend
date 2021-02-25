@@ -74,13 +74,7 @@
 </template>
 
 <script>
-import {
-  reactive,
-  ref,
-  getCurrentInstance,
-  createVNode,
-  watchEffect,
-} from "vue";
+import { reactive, ref, getCurrentInstance, createVNode, watch } from "vue";
 import { Modal } from "ant-design-vue";
 import Add from "./add";
 import Send from "./send";
@@ -212,11 +206,11 @@ export default {
     });
     let tableData = ref([]);
 
-    const renderTable = (current = 1) => {
-      if (props.tabsType == "history") {
-        searchForm.status = 4;
-      }
+    if (props.tabsType == "history") {
+      searchForm.status = 4;
+    }
 
+    const renderTable = (current = 1) => {
       getTableData(ctx.$http, {
         url: "/keys/list",
         searchForm,
@@ -228,13 +222,18 @@ export default {
       });
     };
 
-    renderTable();
-    watchEffect(() => {
-      searchForm.id = route.query.id || "";
-      renderTable();
-    });
+    // renderTable();
+    watch(
+      () => route.query.id,
+      () => {
+        searchForm.id = route.query.id || "";
+        renderTable();
+      },
+      { immediate: true }
+    );
 
     const changeTable = (pag) => {
+      console.log(pag);
       pages.current = pag.current;
       renderTable(pages.current);
     };

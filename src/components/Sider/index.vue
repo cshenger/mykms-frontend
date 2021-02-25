@@ -46,7 +46,7 @@ export default {
   watch: {
     $route: {
       handler() {
-        this.selectedKeys = [this.$route.fullPath];
+        this.selectedKeys = [this.$route.path];
         this.openKeys = [this.$route.matched[0].path];
       },
       immediate: true,

@@ -2,7 +2,7 @@
   <div class="login">
     <section class="main">
       <h1>密钥管理系统</h1>
-      <a-form ref="ruleForm" :model="form" :rules="rules">
+      <a-form name="ruleForm" ref="ruleForm" :model="form" :rules="rules" @finish="handleFinish">
         <a-form-item ref="loginName" name="loginName">
           <a-input size="large" v-model:value="form.loginName" placeholder="登录名">
             <template #prefix>
@@ -17,7 +17,7 @@
             </template>
           </a-input>
         </a-form-item>
-        <a-button size="large" type="primary" block @click="onSubmit">
+        <a-button html-type="submit" size="large" type="primary" block>
           登 录
         </a-button>
       </a-form>
@@ -94,11 +94,16 @@ export default {
         });
     };
 
+    const handleFinish = (values) => {
+      onSubmit();
+    };
+
     return {
       ruleForm,
       form,
       rules,
       onSubmit,
+      handleFinish,
     };
   },
 };
