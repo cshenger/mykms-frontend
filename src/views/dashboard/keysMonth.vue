@@ -20,6 +20,9 @@ const option = {
   tooltip: {
     trigger: "axis",
   },
+  legend: {
+    data: ["草稿", "待审核", "审核通过", "审核不通过", "已过期"],
+  },
   grid: {
     left: "3%",
     right: "4%",
@@ -39,11 +42,11 @@ const option = {
     type: "value",
   },
   series: [
-    {
-      data: [],
-      type: "line",
-      areaStyle: {},
-    },
+    // {
+    //   data: [],
+    //   type: "line",
+    //   areaStyle: {},
+    // },
   ],
 };
 
@@ -76,7 +79,7 @@ export default {
         params: { ...this.searchForm },
       }).then((res) => {
         option.xAxis.data = res.data.xData;
-        option.series[0].data = res.data.yData;
+        option.series = res.data.yData;
         myChart.setOption(option);
         this.resizeChart();
       });

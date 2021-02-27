@@ -9,6 +9,8 @@ let pages = reactive({
   current: 1,
   pageSize: 10,
   total: 0,
+  showTotal: total => `共${total}条`,
+  showQuickJumper: true
 });
 
 const changeTable = (pag, filters, sorter) => {
