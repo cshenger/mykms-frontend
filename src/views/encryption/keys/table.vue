@@ -66,7 +66,7 @@
     </a-table>
 
     <!-- 弹框部分-->
-    <a-modal v-model:visible="dialogs.visible" :title="dialogs.title" :maskClosable="false" :footer="null" :width="800">
+    <a-modal v-model:visible="dialogs.visible" :title="dialogs.title" :maskClosable="false" :footer="null" :width="800" @cancel="cancelDialog">
       <Add v-if="dialogs.visible && dialogs.subType!='send'" :subType="dialogs.subType" :parentData="dialogs.parentData" @cancel-dialog="cancelDialog" />
       <Send v-if="dialogs.visible && dialogs.subType=='send'" :subType="dialogs.subType" :id="dialogs.id" @cancel-dialog="cancelDialog" />
     </a-modal>

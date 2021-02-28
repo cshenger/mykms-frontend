@@ -83,7 +83,7 @@ export default {
                 token: res.data.token,
                 userId: res.data.userId,
                 loginName: res.data.loginName,
-                userRole: res.data.userRole,
+                userRole: JSON.parse(JSON.stringify(res.data.userRole)),
                 userName: res.data.userName,
               });
               router.push({ path: "/" });

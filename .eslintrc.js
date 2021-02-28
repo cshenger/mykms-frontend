@@ -16,5 +16,6 @@ module.exports = {
     'no-extra-boolean-cast': 'off',
     'no-deprecated-v-on-native-modifier': 'off',
     'no-unused-vars': 'off',
+    'no-prototype-builtins': 'off'
   }
 }

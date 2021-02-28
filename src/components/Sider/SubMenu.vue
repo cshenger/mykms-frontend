@@ -5,12 +5,12 @@
       <span>{{ menuInfo.meta.title }}</span>
     </template>
     <template v-for="item in menuInfo.children">
-      <a-menu-item v-if="(!item.children || item.children.length==1) && !item.hidden && (!item.roles || (item.roles && hasRoles(userRole, item.roles)))" :key="item.path">
+      <a-menu-item v-if="(!item.children || item.children.length==1) && !item.hidden && showFromRole(item)" :key="item.path">
         <router-link :to="{path: item.path}">
           <span>{{ item.meta.title }}</span>
         </router-link>
       </a-menu-item>
-      <sub-menu v-if="item.children && item.children.length>1 && !item.hidden && (!item.roles || (item.roles && hasRoles(userRole, item.roles)))" :key="item.path" :menu-info="item" :collapsed="collapsed" />
+      <sub-menu v-if="item.children && item.children.length>1 && !item.hidden && showFromRole(item)" :key="item.path" :menu-info="item" :collapsed="collapsed" />
     </template>
   </a-sub-menu>
 </template>
@@ -27,13 +27,23 @@ export default {
     },
     collapsed: Boolean,
   },
-  computed: {
-    userRole() {
-      return this.$store.state.userRole;
-    },
+  data() {
+    return {
+      userRole: [],
+    };
   },
   methods: {
     hasRoles: hasRoles,
+    showFromRole(item) {
+      return (
+        !item.meta ||
+        !item.meta.roles ||
+        (item.meta.roles && hasRoles(this.userRole, item.meta.roles))
+      );
+    },
+  },
+  created() {
+    this.userRole = this.$store.state.userRole;
   },
 };
 </script>

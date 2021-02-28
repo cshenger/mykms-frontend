@@ -3,19 +3,19 @@
     <!-- <div class="logo" /> -->
     <a-menu theme="dark" mode="inline" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys">
       <template v-for="item in navs">
-        <a-menu-item v-if="!item.children && !item.hidden && (!item.roles || (item.roles && hasRoles(userRole, item.roles)))" :key="item.path">
+        <a-menu-item v-if="!item.children && !item.hidden && showFromRole(item)" :key="item.path">
           <router-link :to="{path: item.path}">
             <span v-if="item.meta.icon" class="anticon"><i :class="item.meta.icon"></i></span>
             <span>{{ item.meta.title }}</span>
           </router-link>
         </a-menu-item>
-        <a-menu-item v-if="item.children && item.children.length===1 && !item.hidden && (!item.roles || (item.roles && hasRoles(userRole, item.roles)))" :key="item.children[0].path">
+        <a-menu-item v-if="item.children && item.children.length===1 && !item.hidden && showFromRole(item)" :key="item.children[0].path">
           <router-link :to="{path: item.children[0].path}">
             <span v-if="item.children[0].meta.icon" class="anticon"><i :class="item.children[0].meta.icon"></i></span>
             <span>{{ item.children[0].meta.title }}</span>
           </router-link>
         </a-menu-item>
-        <sub-menu v-if="item.children && item.children.length>1 && !item.hidden && (!item.roles || (item.roles && hasRoles(userRole, item.roles)))" :menu-info="item" :key="item.path" :collapsed="collapsed" />
+        <sub-menu v-if="item.children && item.children.length>1 && !item.hidden && showFromRole(item)" :menu-info="item" :key="item.path" :collapsed="collapsed" />
       </template>
     </a-menu>
   </a-layout-sider>
@@ -41,6 +41,7 @@ export default {
       selectedKeys: [],
       openKeys: [],
       roles: [],
+      userRole: [],
     };
   },
   watch: {
@@ -52,11 +53,6 @@ export default {
       immediate: true,
     },
   },
-  computed: {
-    userRole() {
-      return this.$store.state.userRole;
-    },
-  },
   methods: {
     onBreakpoint() {
       if (window.innerWidth > 650) {
@@ -66,9 +62,17 @@ export default {
       }
     },
     hasRoles: hasRoles,
+    showFromRole(item) {
+      return (
+        !item.meta ||
+        !item.meta.roles ||
+        (item.meta.roles && hasRoles(this.userRole, item.meta.roles))
+      );
+    },
   },
   created() {
     this.navs = routes;
+    this.userRole = this.$store.state.userRole;
   },
 };
 </script>

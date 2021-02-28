@@ -4,6 +4,12 @@ import {
 } from 'vue-router'
 import routes from "./routes"
 import store from "@/store";
+import {
+  hasRoles
+} from "../utils/index";
+import {
+  message
+} from 'ant-design-vue';
 
 //页面刷新时，重新赋值token
 if (sessionStorage.getItem("token")) {
@@ -27,7 +33,17 @@ router.beforeEach((to, from, next) => {
   let token = store.state.token;
 
   if (token) {
-    next();
+    let userRole = store.state.userRole;
+    if (to.meta && to.meta.roles) {
+      if (hasRoles(userRole, to.meta.roles)) {
+        next();
+      } else {
+        message.error('该用户无此权限');
+        next('/login');
+      }
+    } else {
+      next();
+    }
   } else {
     if (to.path === '/login') { //这就是跳出循环的关键
       next()

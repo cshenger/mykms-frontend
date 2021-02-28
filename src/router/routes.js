@@ -42,7 +42,9 @@ const routes = [{
     name: 'Users',
     redirect: '/users/index',
     component: Home,
-    roles: ['sysAdmin'],
+    meta: {
+      roles: ['sysAdmin'],
+    },
     children: [{
       path: "/users/index",
       name: 'UsersIndex',
@@ -68,25 +70,25 @@ const routes = [{
       path: "/encryption/keys",
       name: 'EncryptionKeys',
       component: () => import('../views/encryption/keys/index.vue'),
-      roles: ['keyAdmin', 'keyAudit', 'keyUser'],
       meta: {
         title: "密钥管理",
+        roles: ['keyAdmin', 'keyAudit', 'keyUser'],
       },
     }, {
       path: "/encryption/algorithm",
       name: 'EncryptionAlgo',
       component: () => import('../views/encryption/algorithm/index.vue'),
-      roles: ['sysAdmin'],
       meta: {
         title: "算法管理",
+        roles: ['sysAdmin'],
       },
     }, {
       path: "/encryption/operation",
       name: 'EncryptionOperation',
       component: () => import('../views/encryption/operation/index.vue'),
-      roles: ['keyUser'],
       meta: {
         title: "操作使用",
+        roles: ['keyUser'],
       },
     }],
   },
