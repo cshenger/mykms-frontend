@@ -59,7 +59,7 @@
         <a-button type="primary" size="small" @click="viewData(record.id)"><template #icon>
             <EyeOutlined />
           </template>查看</a-button>
-        <a-button v-if="(record.status.code==0||record.status.code==3) && store.state.userId==record.createUser.code" type="danger" size="small" @click="deleteData(record.id)"><template #icon>
+        <a-button v-if="(record.status.code==0||record.status.code==3||record.status.code==4) && store.state.userId==record.createUser.code" type="danger" size="small" @click="deleteData(record.id)"><template #icon>
             <DeleteOutlined />
           </template>删除</a-button>
       </template>
