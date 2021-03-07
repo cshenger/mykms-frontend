@@ -10,7 +10,7 @@
             <template v-slot:icon>
               <UserOutlined />
             </template>
-          </a-avatar> {{loginName}}
+          </a-avatar> {{userName}}
           <DownOutlined />
         </a>
         <template v-slot:overlay>
