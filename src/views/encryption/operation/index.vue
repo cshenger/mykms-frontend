@@ -20,6 +20,10 @@
       </a-form-item>
       <a-form-item v-if="!!outputer" label="输出内容">
         <a-textarea v-model:value="outputer" disabled />
+        <section class="text-right">
+          <a-button size="small" @click="copyContent">复制</a-button>
+        </section>
+        <textarea id="copyarea" style="position:absolute;left:-1000px;"></textarea>
       </a-form-item>
     </a-form>
   </div>
@@ -27,6 +31,7 @@
 
 <script>
 import { reactive, ref, getCurrentInstance } from "vue";
+import { message } from "ant-design-vue";
 
 export default {
   name: "EncryptionOperation",
@@ -83,6 +88,17 @@ export default {
         });
     };
 
+    // 复制
+    const copyContent = (evt) => {
+      let $copyarea = document.getElementById("copyarea");
+      $copyarea.innerText = outputer.value;
+      $copyarea.select();
+      if (document.execCommand("copy")) {
+        document.execCommand("copy");
+        message.success("复制成功");
+      }
+    };
+
     return {
       loading,
       ruleForm,
@@ -91,6 +107,7 @@ export default {
       rules,
       outputer,
       onSubmit,
+      copyContent,
     };
   },
 };
