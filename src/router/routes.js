@@ -92,6 +92,24 @@ const routes = [{
       },
     }],
   },
+
+  // 首页
+  {
+    path: '/operaLog',
+    name: 'OperaLog',
+    redirect: '/operaLog/index',
+    component: Home,
+    children: [{
+      path: "/operaLog/index",
+      name: 'OperaLog',
+      component: () => import('../views/operaLog/index.vue'),
+      meta: {
+        title: "操作日志",
+        icon: 'fa fa-list',
+        roles: ['sysAdmin'],
+      }
+    }]
+  },
 ]
 
 export default routes;
