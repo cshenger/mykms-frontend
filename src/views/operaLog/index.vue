@@ -4,19 +4,19 @@
       <div class="fl-left">
         <a-form layout="inline" :model="searchForm" @submit="renderTable(1)">
           <a-form-item>
-            <a-select v-model:value="searchForm.userId" placeholder="操作人" allowClear style="width: 150px">
-              <a-select-option v-for="item in userOptions" :key="item.id" :value="item.id">{{item.userName}}</a-select-option>
+            <a-select v-model:value="searchForm.userId" placeholder="操作人" allowClear show-search :filter-option="filterOption" option-filter-prop="children" style="width: 200px">
+              <a-select-option v-for="item in userOptions" :key="item.id" :value="item.id">{{item.userName}} - {{item.loginName}}</a-select-option>
             </a-select>
           </a-form-item>
           <a-form-item>
-            <a-select v-model:value="searchForm.method" placeholder="操作方法" allowClear style="width: 150px">
+            <a-select v-model:value="searchForm.method" placeholder="操作方法" allowClear style="width: 120px">
               <a-select-option value="POST">POST</a-select-option>
               <a-select-option value="PUT">PUT</a-select-option>
               <a-select-option value="DELETE">DELETE</a-select-option>
             </a-select>
           </a-form-item>
           <a-form-item>
-            <a-select v-model:value="searchForm.action" placeholder="操作动作" allowClear style="width: 150px">
+            <a-select v-model:value="searchForm.action" placeholder="操作动作" allowClear style="width: 120px">
               <a-select-option value="登录">登录</a-select-option>
               <a-select-option value="新增">新增</a-select-option>
               <a-select-option value="修改">修改</a-select-option>
@@ -117,6 +117,13 @@ export default {
       endTime: "",
     });
     let tableData = ref([]);
+    const filterOption = (input, option) => {
+      return (
+        option.children[0].children
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      );
+    };
 
     const renderTable = (current = 1) => {
       getTableData(ctx.$http, {
@@ -170,6 +177,7 @@ export default {
       tableData,
       renderTable,
       changeTable,
+      filterOption,
     };
   },
 };
