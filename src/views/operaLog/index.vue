@@ -39,6 +39,9 @@
       <template #num="{ index }">
         <span>{{ index+1 }}</span>
       </template>
+      <template #action="{text: action}">
+        <span :style="{color: acColor(action)}">{{action}}</span>
+      </template>
       <template #status="{text: status}">
         <span :style="{color: status==1 ? '#19f319' : '#f52225'}">{{status==1 ? '成功' : '失败'}}</span>
       </template>
@@ -90,6 +93,7 @@ const columns = [
     title: "动作",
     key: "action",
     dataIndex: "action",
+    slots: { customRender: "action" },
   },
   {
     title: "状态",
@@ -163,9 +167,25 @@ export default {
       }
     );
 
+    // 获取下拉框
     ctx.$http({ url: "/dict/users", ignoreReq: true }).then((res) => {
       userOptions.value = res.data;
     });
+
+    // 动作的颜色
+    const acColor = (title) => {
+      let color = "#333";
+
+      if (title == "新增") {
+        color = "#66cdaa";
+      } else if (title == "修改") {
+        color = "#6495ed";
+      } else if (title == "删除") {
+        color = "#fa8072";
+      }
+
+      return color;
+    };
 
     return {
       columns,
@@ -178,6 +198,7 @@ export default {
       renderTable,
       changeTable,
       filterOption,
+      acColor,
     };
   },
 };
